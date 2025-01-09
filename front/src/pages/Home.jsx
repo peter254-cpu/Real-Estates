@@ -13,7 +13,7 @@ const Home = () => {
   const [rentListing, setRentListing] = useState([])
   SwiperCore.use([Navigation]);
 
-  console.log(saleListing)
+  
 
   useEffect(() => {
     const fetchOfferListing = async () =>{
@@ -53,16 +53,14 @@ const Home = () => {
   }, [])
 
   return (
-    <div>
+    <div className='flex flex-col items-center'>
       {/* top */}
-        <div className='flex flex-col gap-6 p-28 px-3 mx-auto'>
-          <h1 className='text-slate-700 font-bold text-3xl lg:text-6xl'>Find Your Next <span className='text-slate-500'>Perfect</span><br /> Place With Ease</h1>
-          <div className='text-gray-400 text-xs sm:text-sm'>
-            Reaslest Estate is the best place to find your next perfect place to live
-            <br />
-            We have a wide range of properties for you choose from
+        <div className='w-full flex flex-col gap-6 p-28 px-3 mx-auto'>
+          <h1 className='text-center w-full text-slate-900 font-bold text-3xl lg:text-6xl'>Find Your Next <span className='text-slate-500'>Perfect</span> Place With Ease</h1>
+          <div className='text-gray-600  sm:text-sm text-center'>
+            Reaslest Estate is the best place to find your next perfect place to live. Wehave a wide range of properties for you choose from
           </div>
-          <Link to = {'/search'} className='text-xs sm:text-sm text-blue-800 font-bold hover:underline'>
+          <Link to = {'/search'} className='m-6 text-xs sm:text-sm text-blue-800 font-bold hover:underline '>
             Get Started
           </Link>
         </div>
@@ -83,7 +81,7 @@ const Home = () => {
       </Swiper>
 
       {/*Results for offer sale and rent */}
-      <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
+      <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10  items-center'>
         {offerListings && offerListings.length > 0 && (
           <div className=''>
             <div className='my-3'>

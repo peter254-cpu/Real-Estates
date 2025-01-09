@@ -11,8 +11,7 @@ import UpdateListing from "./pages/UpdateListing";
 import Listing from "./pages/Listing"
 import Search from "./components/Search";
 import React from "react";
-
-
+import Footer from "./components/Footer";
 
 
 export default function App() {
@@ -31,5 +30,6 @@ export default function App() {
           <Route path="/update-listing/:listingId" element ={<UpdateListing />} />
       </Route>
     </Routes>
+    <Footer />
   </BrowserRouter>
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import userReducer from '../redux/user/userSlice'
+import userReducer from './redux/user/userSlice'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux';
 import { FLUSH, persistReducer, persistStore, PAUSE, PERSIST, REGISTER, PURGE, REHYDRATE } from 'redux-persist';
