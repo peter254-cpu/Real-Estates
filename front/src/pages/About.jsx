@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
 import { Navigation } from 'swiper/modules'
-import { clientReviews } from '../../constants';
+import { clientReviews } from '../constants'
 
 const About = () => {
   SwiperCore.use([Navigation]);
