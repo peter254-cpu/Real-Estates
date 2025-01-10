@@ -6,11 +6,13 @@ import { app } from '../../firebase'
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice"
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import axios from "axios"
 
 
 const Profile = () => {
   const fileRef = useRef()
   const { currentUser } = useSelector((state) => state.user);
+  console.log("current user", currentUser)
   const { error, loading } = useSelector((state) =>  state.user);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
@@ -31,6 +33,7 @@ const Profile = () => {
           "Content-Type": "application/json"
         }
       })
+      
       const data = await res.json();
       if(data.success === false){
        dispatch(deleteUserFailure(data.message))

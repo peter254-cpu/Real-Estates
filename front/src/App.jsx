@@ -12,6 +12,8 @@ import Listing from "./pages/Listing"
 import Search from "./components/Search";
 import React from "react";
 import Footer from "./components/Footer";
+import SaleListing from "./pages/SaleListing";
+import RentListing from "./pages/RentListing";
 
 
 export default function App() {
@@ -24,6 +26,8 @@ export default function App() {
       <Route path="/about" element ={<About />} />
       <Route path="/listing/:listingId" element={<Listing />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/sales" element={<SaleListing />} />
+      <Route path="/rent" element={<RentListing />} />
       <Route element={<ProtectedRoutes />}>
           <Route path="/profile" element ={<Profile />} />
           <Route path="/create-listing" element ={<CreateListing />} />

@@ -21,12 +21,12 @@ const Home = () => {
         const res = await fetch('https://realestates-apllication.onrender.com/api/listing/get?offer=true&limit=3');
         const data = await res.json()
         setOfferListings(data)
-        fetchRentListing()
-        console.log(data)
-        fetchSaleListings()
+        
+        console.log(data)   
       } catch (error) {
         console.log(error)
       }
+      fetchOfferListing()
     }
     const fetchRentListing = async () => {
       try {
@@ -37,7 +37,7 @@ const Home = () => {
       } catch (error) {
         console.log(error)
       }
-
+      fetchRentListing()
     }
     const fetchSaleListings = async () => {
       try {
@@ -49,7 +49,7 @@ const Home = () => {
         console.log(error)
       }
     }
-    fetchOfferListing()
+    fetchSaleListings()
   }, [])
 
   return (

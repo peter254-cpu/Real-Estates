@@ -6,7 +6,6 @@ const Search = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [listings, setListings] = useState([])
-    console.log('Listings', listings)
     const [sideBarData, setSideBarData] = useState({
         searchTerm: "",
         type: "all",
