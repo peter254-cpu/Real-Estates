@@ -21,23 +21,23 @@ const Home = () => {
         const res = await fetch('https://realestates-apllication.onrender.com/api/listing/get?offer=true&limit=3');
         const data = await res.json()
         setOfferListings(data)
-        
+        fetchOfferListing()
         console.log(data)   
       } catch (error) {
         console.log(error)
       }
-      fetchOfferListing()
+      
     }
     const fetchRentListing = async () => {
       try {
         const res = await fetch('https://realestates-apllication.onrender.com/api/listing/get?rent=true&limit=3');
         const data = await res.json()
         setRentListing(data)
-        console.log("listing data", data)
+        fetchRentListing()
       } catch (error) {
         console.log(error)
       }
-      fetchRentListing()
+      
     }
     const fetchSaleListings = async () => {
       try {
@@ -71,13 +71,11 @@ const Home = () => {
         offerListings && offerListings.length > 0 && offerListings.map((listing) => (
           <SwiperSlide>
             <div style={{background: `url(${listing.imageUrls[0]}) center no-repeat`, backgroundSize: "cover"}} className='h-[500px]' key={listing._id}>
-
+              
             </div>
           </SwiperSlide>
-
         )) 
       }
-
       </Swiper>
 
       {/*Results for offer sale and rent */}
