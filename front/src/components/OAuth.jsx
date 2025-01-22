@@ -37,7 +37,6 @@ export default function OAuth() {
 
     } catch (error) {
       console.log('Could not sign in with Google', error);
-      setError('Could not sign in with Google. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -48,7 +47,7 @@ export default function OAuth() {
       <button
         type="button"
         onClick={handleGoogleClick}
-        className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'
+        className='w-full bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'
         disabled={loading}
       >
         {loading ? 'Signing in...' : 'Continue With Google'}

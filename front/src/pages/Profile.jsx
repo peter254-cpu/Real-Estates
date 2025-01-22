@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable }  from 'firebase/storage'
@@ -6,20 +6,18 @@ import { app } from '../../firebase'
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice"
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import axios from "axios"
 
 
 const Profile = () => {
   const fileRef = useRef()
   const { currentUser } = useSelector((state) => state.user);
-  console.log("current user", currentUser)
   const { error, loading } = useSelector((state) =>  state.user);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
-  const [fileUploadError, setFileUplaodError] = useState(false)
+  const [fileUploadError, setFileUploadError] = useState(false)
   const [formData, setFormData] = useState({})
   const [updateSuccess, setUpdateSuccess] = useState(false)
-  const [showListingsError, setShowLitingsError] = useState(false)
+  const [showListingsError, setShowListingsError] = useState(false)
   const [userListings, setUserListings] = useState([])
   const dispatch = useDispatch()
 
@@ -69,7 +67,29 @@ const Profile = () => {
       allow write: if
       request.resource.size < 2 * 1024 * 1024 &&
       request.resource.contentType.matches('image/.*')*/
-      useEffect(() => {
+      const handleFileUpload = (file) => {
+        const storage = getStorage(app);
+        const filename = new Date().getTime() + file.name;
+        const storageRef = ref(storage, filename);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+      
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setFilePerc(Math.round(progress));
+          },
+          (_error) => {
+            setFileUploadError(true);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+              setFormData({ ...formData, avatar: downloadUrl });
+            });
+          }
+        );
+      };
+      useEffect(() => { 
         if(file){
           handleFileUpload(file)
         }
@@ -81,22 +101,25 @@ const Profile = () => {
 
       const handleShowListing = async () => {
         try {
-          setFileUplaodError(false)
-          const res = await fetch(`https://realestates-apllication.onrender.com/api/user/listings/${currentUser._id}`,
-            {
-              credentials: "include",
-            }
-          )
+          setFileUploadError(false);
+          const res = await fetch(`https://realestates-apllication.onrender.com/api/user/listings/${currentUser._id}`, {
+            credentials: "include",
+            headers: {
+              "Authorization": `Bearer ${currentUser}`, // Add this line if using Bearer token
+              "Content-Type": "application/json"
+            },
+          });
           const data = await res.json();
-          if(data.success === false){
-            setShowLitingsError(true)
-            return
+          if (data.success === false) {
+            setShowListingsError(true);
+            return;
           }
-          setUserListings(data)
+          setUserListings(data);
         } catch (error) {
-          setShowLitingsError(true);
+          setShowListingsError(true);
         }
-      }
+      };
+      
    
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -122,29 +145,9 @@ const Profile = () => {
         }
       }
 
-      const handleFileUpload = (file) => {
-        const storage = getStorage(app)
-        const filename = new Date().getTime() + file.name;
-        const storageRef = ref(storage, filename)
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred /
-              snapshot.totalBytes) * 100;
-              setFilePerc(Math.round(progress))
-        },
-        (error) => {
-          setFileUplaodError(true)
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-            setFormData({ ...formData, avatar: downloadUrl })
-          })
-        }
-        )
+     
       
-}
+
   const handleListingDelete = async (listingId) => {
     try {
       const res = await fetch(`https://realestates-apllication.onrender.com/api/listing/delete/${listingId}`, {
