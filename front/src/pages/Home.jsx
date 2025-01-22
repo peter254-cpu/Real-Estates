@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css/bundle'
 import ListingItem from '../components/ListingItem'
-import axios from "axios"
 
 const Home = () => {
   const [offerListings, setOfferListings] = useState([])
@@ -14,18 +13,17 @@ const Home = () => {
   SwiperCore.use([Navigation]);
 
   
-
   useEffect(() => {
     const fetchOfferListing = async () =>{
       try {
         const res = await fetch('https://realestates-apllication.onrender.com/api/listing/get?offer=true&limit=3');
         const data = await res.json()
         setOfferListings(data)
-        fetchOfferListing()
         console.log(data)   
       } catch (error) {
         console.log(error)
       }
+      
       
     }
     const fetchRentListing = async () => {
@@ -33,11 +31,10 @@ const Home = () => {
         const res = await fetch('https://realestates-apllication.onrender.com/api/listing/get?rent=true&limit=3');
         const data = await res.json()
         setRentListing(data)
-        fetchRentListing()
       } catch (error) {
         console.log(error)
       }
-      
+      fetchRentListing()
     }
     const fetchSaleListings = async () => {
       try {
@@ -50,6 +47,8 @@ const Home = () => {
       }
     }
     fetchSaleListings()
+    fetchRentListing()
+    fetchOfferListing()
   }, [])
 
   return (
@@ -69,7 +68,7 @@ const Home = () => {
       <Swiper navigation>
       {
         offerListings && offerListings.length > 0 && offerListings.map((listing) => (
-          <SwiperSlide>
+          <SwiperSlide key={""}>
             <div style={{background: `url(${listing.imageUrls[0]}) center no-repeat`, backgroundSize: "cover"}} className='h-[500px]' key={listing._id}>
               
             </div>
