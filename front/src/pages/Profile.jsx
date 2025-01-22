@@ -103,10 +103,11 @@ const Profile = () => {
         try {
           setFileUploadError(false);
           const res = await fetch(`https://realestates-apllication.onrender.com/api/user/listings/${currentUser._id}`, {
+            method: "GET",
             credentials: "include",
             headers: {
-              "Authorization": `Bearer ${currentUser}`, // Add this line if using Bearer token
-              "Content-Type": "application/json"
+              "Authorization": `Bearer ${currentUser.token}`,  // Include the token here
+              "Content-Type": "application/json",
             },
           });
           const data = await res.json();
@@ -119,6 +120,7 @@ const Profile = () => {
           setShowListingsError(true);
         }
       };
+      
       
    
       const handleSubmit = async (e) => {
